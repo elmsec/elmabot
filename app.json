@@ -1,0 +1,72 @@
+{
+    "name": "ElmaBot - Telegram User Bot from ElmaDev",
+    "description": "ElmaBot is an open-source user bot for the Telegram messaging service.",
+    "keywords": [
+      "telegram",
+      "userbot",
+      "chat",
+      "messaging",
+      "elmabot",
+      "elmadev",
+      "elmsec"
+    ],
+    "website": "https://elma.dev/works/elmabot/",
+    "repository": "https://github.com/elmsec/elmabot",
+    "logo": "https://raw.githubusercontent.com/elmsec/elmabot/master/logo.png",
+    "success_url": "https://t.me/elmadev",
+    "env": {
+      "ADMIN_ID": {
+        "description": "Your Telegram ID. You can get it from @getuseridbot on Telegram"
+      },
+      "API_ID": {
+        "description": "Your Telegram APP ID. Get a new API ID and API HASH from my.telegram.org by creating a new app on that page."
+      },
+      "API_HASH": {
+        "description": "Your Telegram APP HASH. Get a new API ID and API HASH from my.telegram.org by creating a new app on that page."
+      },
+      "MONGODB_URI": {
+        "description": "Your MongoDB Atlas URI."
+      },
+      "LOG_CHANNEL_ID": {
+        "description": "Your log channel's ID to send logs. Add the @getuseridbot that channel as an admin and send a message on the channel, it will give you the ID. ",
+        "required": false
+      },
+      "STRING_SESSION": {
+        "description": "You can use the `python elmabot/string_session.py` command in your terminal and obtain a new session ID to paste here. ElmaBot depends on this session ID. Do NOT share it with anyone!"
+      },
+      "TWITTER_ACCESS_TOKEN": {
+        "description": "Your Twitter app's access token. Create a new Twitter app on https://developer.twitter.com/en/apps/create. ",
+        "required": false
+      },
+      "TWITTER_ACCESS_TOKEN_SECRET": {
+        "description": "Your Twitter app's access token. Create a new Twitter app on https://developer.twitter.com/en/apps/create. ",
+        "required": false
+      },
+      "TWITTER_API_KEY": {
+        "description": "Your Twitter app's access token. Create a new Twitter app on https://developer.twitter.com/en/apps/create. ",
+        "required": false
+      },
+      "TWITTER_API_SECRET_KEY": {
+        "description": "Your Twitter app's access token. Create a new Twitter app on https://developer.twitter.com/en/apps/create. ",
+        "required": false
+      },
+      "TWITTER_ID": {
+        "description": "Your Twitter user ID. Get it via http://gettwitterid.com/.",
+        "required": false
+      }
+    },
+    "addons": [
+      {
+        "plan": "heroku-postgresql",
+        "options": {
+          "version": "12"
+        }
+      }
+    ],
+    "buildpacks": [
+      {
+        "url": "heroku/python"
+      }
+    ]
+  }
+

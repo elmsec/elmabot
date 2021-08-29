@@ -1,0 +1,17 @@
+en:
+  commands:
+    "!about":
+      description: about me
+      answer: 'About me...'
+  dialogs:
+    greetings:  # messages to trigger greeting message
+    - hi
+    - hey
+    - hello
+    greetings_answers:
+    - 'Hi! This is me.'
+    - 'Hello! What\'s up?'
+  messages:
+    invalid_command: "Invalid command. Here's a list of the commands:\n\n"
+    an_error_occurred: An error occurred.
+tr:
