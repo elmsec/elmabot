@@ -10,6 +10,33 @@ async def most_used_words(event):
     Default is 1000.
     """
 
+    STOP_WORDS = {
+        # English
+        "i", "me", "my", "myself", "we", "our", "ours", "ourselves", "you",
+        "your", "yours", "yourself", "yourselves", "he", "him", "his",
+        "himself", "she", "her", "hers", "herself", "it", "its", "itself",
+        "they", "them", "their", "theirs", "themselves", "what", "which",
+        "who", "whom", "this", "that", "these", "those", "am", "is", "are",
+        "was", "were", "be", "been", "being", "have", "has", "had", "having",
+        "do", "does", "did", "doing", "a", "an", "the", "and", "but", "if",
+        "or", "because", "as", "until", "while", "of", "at", "by", "for",
+        "with", "about", "against", "between", "into", "through", "during",
+        "before", "after", "above", "below", "to", "from", "up", "down", "in",
+        "out", "on", "off", "over", "under", "again", "further", "then",
+        "once", "here", "there", "when", "where", "why", "how", "all", "any",
+        "both", "each", "few", "more", "most", "other", "some", "such", "no",
+        "nor", "not", "only", "own", "same", "so", "than", "too", "very", "s",
+        "t", "can", "will", "just", "don", "should", "now"
+
+        # Turkish
+        "acaba", "ama", "aslında", "az", "bazı", "belki", "biri", "birkaç",
+        "birşey", "biz", "bu", "çok", "çünkü", "da", "daha", "de", "defa",
+        "diye", "eğer", "en", "gibi", "hem", "hep", "hepsi", "her", "hiç",
+        "için", "ile", "ise", "kez", "ki", "kim", "mı", "mu", "mü", "nasıl",
+        "ne", "neden", "nerde", "nerede", "nereye", "niçin", "niye", "o",
+        "sanki", "şey", "siz", "şu", "tüm", "ve", "veya", "ya", "yani"
+    }
+
     words = dict()
     input_limit = event.pattern_match.group(1) or 1000
     limit = int(input_limit)  # number of messages to analyze
@@ -22,13 +49,17 @@ async def most_used_words(event):
         if analyzed % 200 == 0:
             await event.edit("{} messages processed.".format(analyzed))
 
-        if _message.text:
-            for word in re_sub(r"[^\w' ]", "", _message.text).split():
-                words[word.lower()] = words.get(word.lower(), 0) + 1
+        if not _message.text:
+            continue
+
+        for word in re_sub(r"[^\w' ]", "", _message.text).split():
+            if word in STOP_WORDS or word.isdigit():
+                continue
+            words[word.lower()] = words.get(word.lower(), 0) + 1
 
     frequency = sorted(words, key=words.get, reverse=True)
     message = (
-        "**{analyzed} messages processed in total. The frequency of use of "
+        "**{analyzed} messages processed in total. The frequency of "
         "{word_limit} most used words:**\n\n"
     ).format(analyzed=analyzed, word_limit=word_limit)
 
