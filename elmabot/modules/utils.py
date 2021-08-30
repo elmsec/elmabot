@@ -48,7 +48,7 @@ def load_docs(module, handlers, plugin, docs={}):
         if doc:
             docstring = doc.replace('\n', ' ')
             docs[plugin] = docs.get(plugin, '')
-            docs[plugin] += f"__{docstring}__\n\n" if docstring else ''
+            docs[plugin] += f"» __{docstring}__\n\n" if docstring else ''
     return docs
 
 
