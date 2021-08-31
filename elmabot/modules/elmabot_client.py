@@ -69,7 +69,8 @@ class ElmaBotClient(TelegramClient):
                     return
 
                 if kwargs_ext.get('reply_only') and not event.reply_to_msg_id:
-                    return await self.rollback(event, '`Mesaj belirtilmedi.`')
+                    reply_only_text = '`no message specified.`'
+                    return await self.rollback(event, reply_only_text)
 
                 is_bot = getattr((await event.get_sender()), 'bot', None)
                 if not kwargs_ext.get('allow_bots') and is_bot:
