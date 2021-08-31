@@ -37,10 +37,10 @@ async def most_used_words(event):
         "sanki", "şey", "siz", "şu", "tüm", "ve", "veya", "ya", "yani"
     }
 
-    words = dict()
+    frequency = dict()
     input_limit = event.pattern_match.group(1) or 1000
     limit = int(input_limit)  # number of messages to analyze
-    word_limit = 20
+    word_limit = 10
 
     analyzed = 0
     await event.edit("`processing messages...`")
@@ -55,16 +55,20 @@ async def most_used_words(event):
         for word in re_sub(r"[^\w' ]", "", _message.text).split():
             if word in STOP_WORDS or word.isdigit():
                 continue
-            words[word.lower()] = words.get(word.lower(), 0) + 1
+            frequency[word.lower()] = frequency.get(word.lower(), 0) + 1
 
-    frequency = sorted(words, key=words.get, reverse=True)
+    # key=frequency.get sorts it by the item value (word frequency)
+    words = sorted(frequency, key=frequency.get, reverse=True)
     message = (
         "**{analyzed} messages processed in total. The frequency of "
         "{word_limit} most used words:**\n\n"
     ).format(analyzed=analyzed, word_limit=word_limit)
 
+    if len(frequency) < word_limit:
+        word_limit = len(frequency)
+
     for i in range(word_limit):
         _message = "{}. {} `({} times)` \n"
-        message += _message.format(i+1, frequency[i], words[frequency[i]])
+        message += _message.format(i+1, words[i], frequency[words[i]])
 
     await event.edit(message)
