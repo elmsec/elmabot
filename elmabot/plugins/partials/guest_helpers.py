@@ -31,7 +31,11 @@ TwitterInstance = ElmaBotTwitter(
     settings.TWITTER_ACCESS_TOKEN, settings.TWITTER_ACCESS_TOKEN_SECRET)
 
 
-def get_dialog(name):
+def get_dialog_items(name):
+    return DIALOGS.get(name)
+
+
+def get_random_dialog_item(name):
     dialogs = DIALOGS[name]
     return random.choice(dialogs)
 
