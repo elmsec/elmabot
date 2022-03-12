@@ -43,7 +43,7 @@ class ElmaBotClient(TelegramClient):
 
         pattern = kwargs.get('pattern', '')
         if type(pattern) is str and pattern.startswith('^.'):
-            kwargs['pattern'] = pattern.replace('^.', '^[.]')
+            kwargs['pattern'] = pattern.replace('^.', r'^[\.]')
 
         if IS_DEBUG:
             # remove restriction on the admin account so it can test handlers

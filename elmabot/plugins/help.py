@@ -14,7 +14,7 @@ DOCS_MESSAGE = (
 )
 
 
-@elmabot.handle(outgoing=True, pattern=r'.help(\s(\w+))?')
+@elmabot.handle(outgoing=True, pattern=r'^.help(\s(\w+))?')
 async def helper(event):
     """
     `.help <opt:plugin_name>`: Sends the documentation of the given plugin

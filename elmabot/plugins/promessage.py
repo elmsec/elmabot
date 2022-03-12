@@ -3,7 +3,7 @@ import asyncio
 from elmabot import elmabot
 
 
-@elmabot.handle(outgoing=True, pattern=r'.sd (\d+) (.+)')
+@elmabot.handle(outgoing=True, pattern=r'^.sd (\d+) (.+)')
 async def self_destruct_message(event):
     """
     `.sd <seconds> <text>`: Sends a self-destructing message.

@@ -62,7 +62,7 @@ async def list_reserved_usernames(event):
     await event.edit(message)
 
 
-@elmabot.handle(outgoing=True, pattern='.own_left_channels')
+@elmabot.handle(outgoing=True, pattern='^.own_left_channels')
 async def own_left_channels(event):
     """
     `.own_left_channels`: Shows a list of your own channels you've left.

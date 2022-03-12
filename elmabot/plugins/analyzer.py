@@ -2,7 +2,7 @@ from re import sub as re_sub
 from elmabot import elmabot
 
 
-@elmabot.handle(outgoing=True, pattern=r'.analyze_words( \d{1,4})?')
+@elmabot.handle(outgoing=True, pattern=r'^.analyze_words( \d{1,4})?')
 async def most_used_words(event):
     """
     `.analyze_words <opt:limit>`: Analyzes messages to find most used words.

@@ -61,7 +61,7 @@ async def aggressive_sayings(event):
         await asyncio.sleep(float(interval))
 
 
-@elmabot.handle(outgoing=True, pattern='.asciiphoto', reply_only=True)
+@elmabot.handle(outgoing=True, pattern='^.asciiphoto', reply_only=True)
 async def ascii_photo_generator(event):
     """
     `.asciiphoto`: Converts the photo of the replied message to an
