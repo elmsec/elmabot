@@ -54,7 +54,13 @@ cp .env.example .env
 vim .env
 ```
 
-4. Start the bot:
+4. Create a session (manual production only):
+
+```
+python elmabot/string_session.py
+```
+
+5. Start the bot:
 
 ```
 python -m elmabot
