@@ -1,11 +1,15 @@
 import asyncio
+from logging import getLogger
 
 # from telethon import functions
 from telethon.tl.functions.channels import (
     JoinChannelRequest, LeaveChannelRequest, GetLeftChannelsRequest
 )
+from telethon import errors
 
 from elmabot import elmabot
+
+logger = getLogger(__name__)
 
 
 @elmabot.handle(outgoing=True, pattern=r"^.quit$")
@@ -22,7 +26,7 @@ async def leave_chat(event):
         await elmabot.rollback(event, '`I could not leave...`')
 
 
-@elmabot.handle(outgoing=True, pattern='.join_own_left_channel ([0-9]+)')
+@elmabot.handle(outgoing=True, pattern='^.join_own_left_channel ([0-9]+)')
 async def join_own_left_channels(event):
     """
     `.join_own_left_channel <channel_id>`: Join to the channel specified with
@@ -38,13 +42,18 @@ async def join_own_left_channels(event):
     if not channel_id:
         return await elmabot.rollback(event, warning)
 
-    async with elmabot.takeout() as takeout:
-        left_channels = await takeout(
-            GetLeftChannelsRequest(0))
+    try:
+        async with elmabot.takeout() as takeout:
+            left_channels = await takeout(
+                GetLeftChannelsRequest(0))
 
-        channels = [c for c in left_channels.chats if c.creator]
-        for channel in channels:
-            if channel.id == int(channel_id):
-                await takeout(JoinChannelRequest(channel))
-                return await event.edit(
-                    message.format(id=channel.id, title=channel.title))
+            channels = [c for c in left_channels.chats if c.creator]
+            for channel in channels:
+                if channel.id == int(channel_id):
+                    await takeout(JoinChannelRequest(channel))
+                    return await event.edit(
+                        message.format(id=channel.id, title=channel.title))
+    except errors.TakeoutInitDelayError as e:
+        takeout_error = f'`Must wait {e.seconds} seconds before takeout`'
+        logger.error(takeout_error, exc_info=True)
+        return await event.edit(takeout_error)
